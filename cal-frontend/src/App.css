@@ -1,0 +1,168 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1,
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+.user-input-form {
+  max-width: 400px;
+  margin: 0 auto 30px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.user-input-form input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.user-input-form button,
+.duration-selector button,
+.time-slots button,
+.booking-form button {
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.user-input-form button {
+  width: 100%;
+  background: #007bff;
+  color: white;
+  border: none;
+}
+
+.user-input-form button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+.duration-selector {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.duration-selector button {
+  margin: 0 10px;
+}
+
+button.active {
+  background: #007bff;
+  color: white;
+  border-color: #0056b3;
+}
+
+.slots-container {
+  margin-bottom: 30px;
+}
+
+.day-slots {
+  margin-bottom: 20px;
+}
+
+.time-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.booking-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.booking-form input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.booking-form button {
+  width: 100%;
+  background: #28a745;
+  color: white;
+  border: none;
+}
+
+.booking-form button:hover:not(:disabled) {
+  background: #218838;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.booking-confirmation {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 90%;
+  z-index: 1000;
+}
+
+.booking-confirmation h2 {
+  color: #28a745;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.booking-details {
+  margin-bottom: 1.5rem;
+}
+
+.booking-details p {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.booking-details a {
+  color: #007bff;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.booking-details a:hover {
+  text-decoration: underline;
+}
+
+.dismiss-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.dismiss-button:hover {
+  background: #5a6268;
+}

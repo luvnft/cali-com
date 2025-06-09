@@ -14,7 +14,7 @@ app.get("/health", (req, res) => {
   res.json({ message: "healthy" });
 });
 
-app.get("/get-slots", async (req: Request, res: Response) => {
+app.post("/get-slots", async (req: Request, res: Response) => {
   let { startTime, endTime } = req.body;
   const { username, duration } = req.body;
   if (!username) {
