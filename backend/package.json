@@ -12,9 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@coinbase/x402": "^0.3.8",
     "axios": "^1.9.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "x402-express": "^0.3.4"
   },
   "devDependencies": {
     "@types/cors": "^2.8.18",

@@ -3,12 +3,30 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { CONSTANTS } from "./constant";
 import axios from "axios";
+import { paymentMiddleware, Network } from "x402-express";
 dotenv.config();
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(
+  paymentMiddleware(
+    (process.env.PUBLIC_ADDRESS as `0x${string}`) ??
+      (() => {
+        throw new Error(
+          "PUBLIC_ADDRESS environment variable is required and must start with 0x"
+        );
+      })(),
+    {
+      "POST /book-meeting-x402": {
+        price: "$0.001",
+        network: "base-sepolia",
+      },
+    },
+    { url: "https://x402.org/facilitator" }
+  )
+);
 
 app.get("/health", (req, res) => {
   res.json({ message: "healthy" });
@@ -140,7 +158,61 @@ app.post("/book-meeting", async (req: Request, res: Response) => {
     });
   }
 });
+app.post("/book-meeting-x402", async (req: Request, res: Response) => {
+  const { attendeeName, attendeeEmail, startTime, username, eventTypeSlug } =
+    req.body;
 
+  if (
+    !attendeeName ||
+    !attendeeEmail ||
+    !startTime ||
+    !username ||
+    !eventTypeSlug
+  ) {
+    res.status(400).json({
+      error:
+        "Missing required fields. Please provide attendeeName, attendeeEmail, startTime, username and eventTypeSlug",
+    });
+  }
+
+  try {
+    const response = await axios.post(
+      "https://api.cal.com/v2/bookings",
+      {
+        attendee: {
+          language: "en",
+          name: attendeeName,
+          timeZone: "America/New_York",
+          email: attendeeEmail,
+        },
+        start: startTime,
+        eventTypeSlug: eventTypeSlug,
+        username: username,
+      },
+      {
+        headers: {
+          Authorization: process.env.CAL_COM_API_KEY as string,
+          "Content-Type": "application/json",
+          "cal-api-version": "2024-08-13",
+        },
+      }
+    );
+
+    res.json({
+      message: "Meeting booked successfully",
+      data: response.data,
+    });
+  } catch (error: any) {
+    console.error(
+      "Error booking meeting:",
+      error.response?.data || error.message
+    );
+    res.status(500).json({
+      error: "Failed to book meeting",
+      details: error.response?.data || error.message,
+    });
+  }
+});
 app.listen(CONSTANTS.PORT, () => {
   console.log(`⚡ Server is running on localhost:${CONSTANTS.PORT}`);
 });
