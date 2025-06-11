@@ -3,30 +3,41 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { CONSTANTS } from "./constant";
 import axios from "axios";
-import { paymentMiddleware, Network } from "x402-express";
+import { paymentMiddleware, Resource } from "x402-express";
 dotenv.config();
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+const facilitatorUrl = "https://x402.org/facilitator" as Resource;
 app.use(
   paymentMiddleware(
-    (process.env.PUBLIC_ADDRESS as `0x${string}`) ??
-      (() => {
-        throw new Error(
-          "PUBLIC_ADDRESS environment variable is required and must start with 0x"
-        );
-      })(),
+    process.env.PUBLIC_ADDRESS as `0x${string}`,
     {
-      "POST /book-meeting-x402": {
+      "POST /test": {
         price: "$0.001",
         network: "base-sepolia",
       },
     },
-    { url: "https://x402.org/facilitator" }
+    { url: facilitatorUrl }
   )
 );
+app.post("/test", (req, res) => {
+  const { attendeeName, attendeeEmail, startTime, username, eventTypeSlug } =
+    req.body;
+  res.json({
+    success: true,
+    booking: {
+      attendeeName,
+      attendeeEmail,
+      startTime,
+      username,
+      eventTypeSlug,
+      status: "confirmed",
+    },
+  });
+});
 
 app.get("/health", (req, res) => {
   res.json({ message: "healthy" });
