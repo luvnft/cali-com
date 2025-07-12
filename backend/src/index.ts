@@ -10,7 +10,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-const facilitatorUrl = "https://x402.org/facilitator" as Resource;
+const facilitatorUrl = "https://402-server.rpgdm2cbc4.workers.dev" as Resource;
 app.use(
   paymentMiddleware(
     process.env.PUBLIC_ADDRESS as `0x${string}`,
